@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Treasure from "./treasure";
+import Image from "next/image";
 
 export default function Home() {
   const patrullas = [
@@ -60,8 +61,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6">
-      <h1 className="text-5xl md:text-7xl font-bold text-sky-600 mb-6 text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-cover bg-center">
+      <h1 className="text-5xl md:text-7xl font-bold text-sky-600 mb-6 text-center font-pirata">
         La Búsqueda del Tesoro
       </h1>
       <Treasure isActive={isActive} isShaking={isShaking} />
@@ -72,7 +73,15 @@ export default function Home() {
           verifyCode();
         }}
       >
-        <div className="flex space-x-2 mb-4">
+        <div
+          className="flex space-x-2 mb-4 p-4 border-4 border-yellow-700 rounded-lg shadow-lg"
+          style={{
+            backgroundImage:
+              "url('/vintage-grungy-textured-paper-background.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
           {Array.from({ length: 6 }).map((_, index) => (
             <input
               key={index}
@@ -80,7 +89,7 @@ export default function Home() {
               maxLength={1}
               value={code[index]}
               onChange={(e) => handleCodeChange(index, e.target.value)}
-              className="w-12 md:w-16 h-16 md:h-20 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-600 text-center text-lg"
+              className="w-12 md:w-16 h-16 md:h-20 border border-yellow-700 bg-yellow-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 text-center text-lg placeholder-yellow-900"
               placeholder="?"
             />
           ))}
@@ -103,14 +112,14 @@ export default function Home() {
           )}
         </div>
       </form>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 w-full max-w-3xl">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 w-full max-w-4xl">
         {patrullas.map((patrulla, index) => (
           <button
             key={index}
             onClick={() => handlePatrullaSelect(patrulla)}
             className={`px-4 py-2 ${
               selectedPatrulla === patrulla ? "bg-blue-800" : "bg-sky-600"
-            } text-white rounded-lg hover:bg-sky-800 transition duration-200`}
+            } text-white rounded-lg hover:bg-sky-800 transition duration-200 font-pirata`}
           >
             {patrulla}
           </button>

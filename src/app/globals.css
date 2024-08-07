@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
+.font-pirata {
+  font-family: 'Pirata One', cursive;
+}
+
 :root {
   background-color: #fbab7e;
   background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
@@ -27,6 +33,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar{
+  width: 0px;
 }
 
 @layer utilities {
