@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Treasure from "./treasure";
-import Image from "next/image";
 
 export default function Home() {
   const patrullas = [
@@ -37,7 +36,7 @@ export default function Home() {
     }
   };
 
-  const verifyCode = () => {
+  const verifyCode = async () => {
     if (!selectedPatrulla) {
       setMessage("Por favor, seleccione una patrulla.");
       return;
@@ -50,6 +49,35 @@ export default function Home() {
       setMessage(`¡Código correcto para la patrulla ${selectedPatrulla}!`);
       setIsActive(true);
       setIsShaking(false);
+
+      // Enviar datos al servidor
+      try {
+        const getTimeInTimezone = (timezoneOffset: number) => {
+          const now = new Date();
+          const offset = timezoneOffset * 60; // Convertir horas a minutos
+          const localOffset = now.getTimezoneOffset(); // Obtener el offset local en minutos
+          const timeInGMT = new Date(
+            now.getTime() + (offset - localOffset) * 60000
+          );
+          return timeInGMT.toISOString().replace("T", " ").replace("Z", "");
+        };
+
+        // GMT-4
+        const timestamp = getTimeInTimezone(-4);
+        await fetch("/api/save-verification", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            patrulla: selectedPatrulla,
+            code: enteredCode,
+            timestamp,
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to save data", error);
+      }
     } else {
       setMessage("Código incorrecto. Inténtalo de nuevo.");
       setIsShaking(true);
