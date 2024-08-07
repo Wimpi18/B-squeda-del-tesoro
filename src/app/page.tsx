@@ -59,11 +59,11 @@ export default function Home() {
           const timeInGMT = new Date(
             now.getTime() + (offset - localOffset) * 60000
           );
-          return timeInGMT.toISOString().replace("T", " ").replace("Z", "");
+          return timeInGMT.toISOString();
         };
 
         // GMT-4
-        const timestamp = getTimeInTimezone(-4);
+        const timestamp = getTimeInTimezone(0);
         await fetch("/api/save-verification", {
           method: "POST",
           headers: {
