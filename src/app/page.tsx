@@ -4,18 +4,18 @@ import { useState } from "react";
 import Treasure from "./treasure";
 
 export default function Home() {
-  const patrullas = [
-    "Águilas",
-    "Escorpiones",
-    "Gatas Andinas",
-    "Jaguares",
-    "Kobras",
-    "Leones",
-    "Leopardos",
-    "Pumas",
-    "Tiburones",
-    "Tigres Dientes de Sable",
-  ];
+  let patrullas: Map<string, string> = new Map();
+  patrullas.set("Águilas", "MGLWOZ");
+  patrullas.set("Escorpiones", "MSLWOZ");
+  patrullas.set("Gatas Andinas", "NATWOZ");
+  patrullas.set("Jaguares", "NANWOZ");
+  patrullas.set("Kobras", "NOCWOZ");
+  patrullas.set("Leones - Marie Curie", "MEHWOZ");
+  patrullas.set("Leones - Stan Lee", "SENWOZ");
+  patrullas.set("Leopardos", "SELWOZ");
+  patrullas.set("Pumas", "SUBWOZ");
+  patrullas.set("Tiburones", "MINWOZ");
+  patrullas.set("Tigres Dientes de Sable", "NICWOZ");
 
   const [selectedPatrulla, setSelectedPatrulla] = useState("");
   const [code, setCode] = useState(Array(6).fill(""));
@@ -42,7 +42,7 @@ export default function Home() {
       return;
     }
 
-    const correctCode = "AAAAAA";
+    const correctCode = patrullas.get(selectedPatrulla);
     const enteredCode = code.join("");
 
     if (enteredCode === correctCode) {
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
       </form>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 w-full max-w-4xl">
-        {patrullas.map((patrulla, index) => (
+        {Array.from(patrullas.keys()).map((patrulla, index) => (
           <button
             key={index}
             onClick={() => handlePatrullaSelect(patrulla)}
